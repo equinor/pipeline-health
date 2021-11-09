@@ -1,0 +1,10 @@
+name: Failed Workflow
+on:
+  push:
+jobs:
+  fail:
+    runs-on: ubuntu-latest
+    name: failed
+    steps:
+    - run: throw "Fail" 
+      shell: pwsh

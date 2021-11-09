@@ -1,0 +1,55 @@
+name: 'Pipeline Health'
+description: 'Sends Slack message to a channel with webhook'
+inputs:
+  uri:
+    description: 'Webhook uri'
+    required: true
+runs:
+  using: "composite"
+  steps:
+    - name: Get latest run results
+      uses: actions/github-script@v5.0.0
+      id: get-runs
+      with:
+        script: |
+            const workflowsRes = await github.request('GET /repos/{owner}/{repo}/actions/workflows', {
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              per_page: '50'
+            });
+            const workflowIds = workflowsRes.data.workflows.map((workflow) => (workflow.id));
+            console.log("Getting the last run details towards the following WorkflowIDs: "  + workflowIds);
+            var result = new Array();
+            for (key in workflowIds) {
+              if (workflowIds.hasOwnProperty(key)) {
+                const workflowId = workflowIds[key];
+                const runsRes = await github.request('GET /repos/{owner}/{repo}/actions/workflows/{workflow_id}/runs', {
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  per_page: '1',
+                  workflow_id: workflowId
+                });
+                const WorkflowObj = runsRes.data.workflow_runs[0]
+                if (WorkflowObj && WorkflowObj.conclusion !== "success") {
+                  result.push(
+                    {
+                      workflow_id: WorkflowObj.workflow_id,
+                      workflow_name: WorkflowObj.name,
+                      workflow_url: WorkflowObj.html_url,
+                      workflow_conclusion: WorkflowObj.conclusion,
+                      workflow_status: WorkflowObj.status,
+                      workflow_created_at: WorkflowObj.created_at,
+                    }
+                  );
+                  console.log(workflowId +" ✔️");
+                }
+              }
+            }
+            return JSON.stringify(result);
+        result-encoding: string
+    - run: ${{ github.action_path }}send-message.ps1 -TemplatePath "${{ github.action_path }}template.json" -uri $env:uri -runResults $env:run_results
+      env:
+        run_results: "${{ steps.get-runs.outputs.result }}"
+        uri: "${{ inputs.uri }}"
+      shell: pwsh
+

@@ -1,0 +1,14 @@
+name: Test Action
+on:
+  workflow_dispatch:
+  push:
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    name: test action
+    steps:
+      - uses: actions/checkout@v2
+      - uses: ./
+        with:
+          uri: ${{ secrets.WEBHOOKURI }}
+          
