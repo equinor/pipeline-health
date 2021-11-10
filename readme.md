@@ -10,6 +10,12 @@
 
 This action uses a webhook to post Github Actions workflow statuses to a selected Slack Channel.
 
+<p align="center">
+
+<img src="./docs/images/slack-message.png" >
+
+</p>
+
 ## How to use
 
 1. Create a workflow in `.github/workflows` directory. File must have suffix `.yml` or `.yaml`.
