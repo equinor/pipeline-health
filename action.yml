@@ -47,7 +47,7 @@ runs:
             }
             return JSON.stringify(result);
         result-encoding: string
-    - run: ${{ github.action_path }}send-message.ps1 -TemplatePath "${{ github.action_path }}template.json" -uri $env:uri -runResults $env:run_results
+    - run: ${{ github.action_path }}/send-message.ps1 -TemplatePath "${{ github.action_path }}/template.json" -uri $env:uri -runResults $env:run_results
       env:
         run_results: "${{ steps.get-runs.outputs.result }}"
         uri: "${{ inputs.uri }}"
