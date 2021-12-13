@@ -5,7 +5,6 @@ Formats the Github REST API result to a Slack Message Payload for the selected C
 Inbound JSON result is classified by conclusion state and formatted by a template that supports a tabular view https://app.slack.com/block-kit-builder/ -> text fields and mrkdwn.
 #>
 param (
-    [Parameter(Mandatory = $true)][string]$TemplatePath,
     [Parameter(Mandatory = $true)]$runResults,
     [Parameter(Mandatory = $true)]$Uri
 )
