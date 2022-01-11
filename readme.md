@@ -34,7 +34,7 @@ jobs:
           uri: ${{ secrets.WEBHOOKURI }}
 ```
 
-2. [Create a Slack app](https://api.slack.com/apps/), or use existing, and create webhook. Copy the Uri.
+2. [Create a Slack app](https://api.slack.com/apps/), or use existing, and create webhook. Copy the Uri. - To add the Slack App to equinor's Slack Workspace it must be approved by the [toolbox/sdp-team](https://equinor.slack.com/archives/C02JJGV05).
 
 <p align="center">
 <img src="./docs/images/create-app.gif" >
