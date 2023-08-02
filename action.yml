@@ -8,7 +8,7 @@ runs:
   using: "composite"
   steps:
     - name: Get latest run results
-      uses: actions/github-script@v5.0.0
+      uses: actions/github-script@v6
       id: get-runs
       with:
         script: |
