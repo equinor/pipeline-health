@@ -7,7 +7,7 @@ jobs:
     runs-on: ubuntu-latest
     name: test action
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - uses: ./
         with:
           uri: ${{ secrets.WEBHOOKURI }}
